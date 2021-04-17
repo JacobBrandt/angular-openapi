@@ -9,7 +9,7 @@
   <div *ngIf="path.operation.requestBody">
     <h3>Request Body</h3>
     <div class="property" *ngFor="let property of schema.properties | keyvalue">
-      <div class="type">{{property.value.type}}</div>
+      <div class="type">{{getSchemaType(property.value)}}</div>
       <div class="describe">
         <div class="name" [ngClass]="{'deprecated': property.value.deprecated}">{{property.key}} <span class="required" *ngIf="schema.required && schema.required.includes(property.key)">*</span></div>
         <div class="description" *ngIf="property.value.minLength">minLength: {{property.value.minLength}}</div>
@@ -22,7 +22,7 @@
   <div *ngIf="path.operation.parameters && path.operation.parameters.length > 0" class="parameters">
     <h3>Parameters</h3>
     <div class="parameter" *ngFor="let param of path.operation.parameters">
-      <div class="type">{{param.schema.type}}</div>
+      <div class="type">{{getSchemaType(param.schema)}}</div>
       <div class="describe">
         <div class="name">{{param.name}}</div>
         <div class="description">{{param.description}}</div>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OpenAPI, Schema, RequestBody, ApiReference } from '../openapi';
 import { ApiService } from '../api.service';
 import { OperationType, ApiPath } from '../api';
+import { getUrlScheme } from '@angular/compiler';
 
 interface Params {
   resource: string;
@@ -59,5 +60,23 @@ export class ApiResourceViewComponent implements OnInit {
         }
       }
     });
+  }
+
+  getSchemaType(schema: Schema) {
+    if (schema.type === "array") {
+      if (schema.items.$ref) {
+        return `${this.getRefName(schema.items.$ref)} [ ]`;
+      } else {
+        return `${schema.items.type} [ ]`;
+      }
+    } else if (schema.$ref) {
+      return this.getRefName(schema.$ref);
+    }
+    return schema.type;
+  }
+
+  getRefName(ref: string) {
+    let paths = ref.split("/")
+    return paths[paths.length - 1];
   }
 }

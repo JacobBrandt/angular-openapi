@@ -30,7 +30,15 @@ export interface Server {
   variables: Map<string, ServerVariable>;
 }
 
-export interface Schema {
+export interface ApiXml {
+  name: string;
+  namespace: string;
+  prefix: string;
+  attribute: boolean;
+  wrapped: boolean;
+}
+
+export interface Schema extends ApiReference {
   required: string[];
   type: string;
   properties: Map<string, Schema>;
@@ -41,10 +49,11 @@ export interface Schema {
   // discriminator?: Discriminator;
   readOnly?: boolean;
   writeOnly?: boolean;
-  // xml?: ApiXml;
+  xml?: ApiXml;
   // externalDocs?: ExternalDoc;
   example?: any;
   deprecated?: boolean;
+  items: Schema;
 }
 
 export interface Parameter {

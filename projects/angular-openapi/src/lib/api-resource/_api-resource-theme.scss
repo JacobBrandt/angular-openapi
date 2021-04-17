@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+
+@mixin ng-openapi-resource-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $hover-color: mat-color($background, hover);
+  $divider-color: mat-color($foreground, divider);
+
+  ng-openapi-resource {
+    .paths {
+      .path {
+        &:hover, &.active {
+          background: $hover-color;
+        }
+        &:not(:last-child) {
+          border-bottom: 1px solid grey;
+        }
+        &.deprecated {
+          color: mat-color($foreground, disabled-text) !important;
+        }
+      }
+    }
+  }
+}

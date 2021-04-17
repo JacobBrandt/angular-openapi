@@ -1,0 +1,14 @@
+<div class="api-resource-name">{{apiResource.name}}</div>
+<div class="paths">
+  <a
+    routerLinkActive="active"
+    [routerLink]="['/openapi', {outlets: {api: 'resource'}}]"
+    [queryParams]="{resource: apiResource.name, path: path.name, operation: path.operation.type}"
+    class="path"
+    [ngClass]="{'deprecated': path.operation.deprecated}"
+    *ngFor="let path of apiResource.paths"
+  >
+    <span class="operation-type" [ngClass]="path.operation.type">{{path.operation.type}}</span>
+    <span class="operation-title">{{path.summary}}</span>
+  </a>
+</div>

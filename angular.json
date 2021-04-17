@@ -122,6 +122,46 @@
           }
         }
       }
+    },
+    "angular-openapi": {
+      "projectType": "library",
+      "root": "projects/angular-openapi",
+      "sourceRoot": "projects/angular-openapi/src",
+      "prefix": "ng-openapi",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/angular-openapi/tsconfig.lib.json",
+            "project": "projects/angular-openapi/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-openapi/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-openapi/src/test.ts",
+            "tsConfig": "projects/angular-openapi/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-openapi/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-openapi/tsconfig.lib.json",
+              "projects/angular-openapi/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo"

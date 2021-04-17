@@ -1,0 +1,23 @@
+@import './api-component-theme';
+@import './api-resource/api-resource-theme';
+@import './api-resource-view/api-resource-view-theme';
+
+@mixin ng-openapi-theme($theme) {
+  .operation-type {
+    &.post {
+      background: #01b48f55;
+    }
+    &.put {
+      background: #c5862b55;
+    }
+    &.get {
+      background: #19b7ec55;
+    }
+    &.delete {
+      background: #ff000055;
+    }
+  }
+  @include ng-openapi-component-theme($theme);
+  @include ng-openapi-resource-theme($theme);
+  @include ng-openapi-resource-view-theme($theme);
+}

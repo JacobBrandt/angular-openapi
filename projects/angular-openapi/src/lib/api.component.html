@@ -1,0 +1,15 @@
+<mat-drawer-container *ngIf="api !== undefined" class="drawer-container">
+  <mat-drawer #drawer class="drawer-sidenav" mode="side" opened>
+    <div class="api">
+      <a routerLink="/" class="api-reference">API Reference</a>
+      <div class="api-version">v{{api.info.version}}</div>
+    </div>
+    <ng-openapi-resource *ngFor="let resource of apiResources | keyvalue" [apiResource]="resource.value"></ng-openapi-resource>
+    <div class="openapi-version">OpenAPI v{{api.openapi}}</div>
+  </mat-drawer>
+
+  <div class="drawer-sidenav-content">
+    <router-outlet name="api"></router-outlet>
+  </div>
+
+</mat-drawer-container>

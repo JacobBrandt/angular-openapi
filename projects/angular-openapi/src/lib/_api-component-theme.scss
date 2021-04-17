@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+
+@mixin ng-openapi-component-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $divider-color: mat-color($foreground, divider);
+
+  app-api {
+    .api-version {
+      color: mat-color($foreground, secondary-text);
+    }
+  }
+}

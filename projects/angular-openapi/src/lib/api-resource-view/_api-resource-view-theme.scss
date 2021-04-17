@@ -1,0 +1,37 @@
+@import '~@angular/material/theming';
+
+@mixin ng-openapi-resource-view-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $divider-color: mat-color($foreground, divider);
+
+  ng-openapi-resource-view {
+    .path {
+      &.deprecated {
+        color: mat-color($foreground, disabled-text);
+      }
+    }
+
+    .required {
+      color: mat-color($warn);
+    }
+      
+    .deprecated-pill {
+      color: mat-color($warn, default-contrast);
+      background-color: mat-color($warn);
+    }
+
+    .parameter, .response, .property {
+      background: mat-color($background, card); 
+    }
+
+    .type {
+      background: $divider-color;
+      border: 1px solid #0092c1;
+    }
+
+    .summary, .description {
+      color: mat-color($foreground, secondary-text);
+    }
+  }
+}

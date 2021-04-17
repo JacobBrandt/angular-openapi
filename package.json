@@ -1,13 +1,12 @@
 {
   "name": "angular-openapi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --project=demo",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build:demo": "ng build demo --prod --baseHref=/angular-openapi/",
+    "deploy:demo": "angular-cli-ghpages --no-silent --dir=dist/demo",
+    "release": "npm run build:demo && npm run deploy:demo"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +28,7 @@
     "@angular/compiler-cli": "~11.2.7",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^1.0.0-rc.1",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

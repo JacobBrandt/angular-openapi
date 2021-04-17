@@ -17,7 +17,7 @@
       </div>
       <div class="deprecated-pill" *ngIf="property.value.deprecated">deprecated</div>
     </div>
-    <div class="required" *ngIf="schema.required.length > 0">* required</div>
+    <div class="required" *ngIf="schema.required && schema.required.length > 0">* required</div>
   </div>
   <div *ngIf="path.operation.parameters && path.operation.parameters.length > 0" class="parameters">
     <h3>Parameters</h3>

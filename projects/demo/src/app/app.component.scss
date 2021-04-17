@@ -1,0 +1,27 @@
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+
+  .github-button {
+    background-color: #eee;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#fcfcfc),to(#eee));
+    background-image: linear-gradient(to bottom,#fcfcfc 0,#eee 100%);
+    background-repeat: no-repeat;
+    border: 1px solid #d5d5d5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size:  16px;
+    line-height: 22px;
+    border: 1px solid #d5d5d5;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    ::ng-deep mat-icon {
+      margin-right: 5px;
+    }
+  }
+}

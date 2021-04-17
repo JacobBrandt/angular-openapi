@@ -1,3 +1,16 @@
+<mat-toolbar>
+  <div class="toolbar">
+    <span>angular-openapi</span>
+    <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle Theme"
+      matTooltipPosition="below">
+      <mat-icon>wb_sunny</mat-icon>
+    </button>
+    <a class="github-button" href="https://github.com/JacobBrandt/angular-openapi" aria-label="Star JacobBrandt/angular-openapi on GitHub">
+      <mat-icon svgIcon="github-mark"></mat-icon>
+      <span>GitHub</span>
+    </a>
+  </div>
+</mat-toolbar>
 <div class="app-frame mat-app-background">
   <router-outlet></router-outlet>
 </div>

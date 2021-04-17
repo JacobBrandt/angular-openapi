@@ -8,8 +8,6 @@ import { ApiResourceComponent } from './api-resource/api-resource.component';
 import { ApiResourceViewComponent } from './api-resource-view/api-resource-view.component';
 import { ApiRoutingModule } from "./api-routing.module";
 
-
-
 @NgModule({
   declarations: [
     ApiComponent,
@@ -20,7 +18,7 @@ import { ApiRoutingModule } from "./api-routing.module";
     CommonModule,
     ApiRoutingModule,
     HttpClientModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
 })
 export class ApiModule { }

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { BehaviorSubject } from 'rxjs';
+
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { OpenAPI, Schema, RequestBody, ApiReference } from '../openapi';
 import { ApiService } from '../api.service';
 import { OperationType, ApiPath } from '../api';
-import { getUrlScheme } from '@angular/compiler';
 
 interface Params {
   resource: string;
@@ -11,16 +14,24 @@ interface Params {
   path: string;
 }
 
+export class TreeNode {
+  constructor(public name: string, public schema: Schema) {
+  }
+}
+
 @Component({
   selector: 'ng-openapi-resource-view',
   templateUrl: './api-resource-view.component.html',
-  styleUrls: ['./api-resource-view.component.scss']
+  styleUrls: ['./api-resource-view.component.scss'],
 })
 export class ApiResourceViewComponent implements OnInit {
   public params!: Params;
   public path!: ApiPath | undefined;
   public api!: OpenAPI;
   public schema!: Schema;
+  public treeData = [];
+  public treeControl: NestedTreeControl<TreeNode>;
+  public dataSource: MatTreeNestedDataSource<TreeNode>
 
   constructor(private activatedRoute: ActivatedRoute, private apiService: ApiService) {
     const params = this.activatedRoute.snapshot.queryParams as Params;
@@ -56,10 +67,29 @@ export class ApiResourceViewComponent implements OnInit {
                 this.schema = body.content[contentType].schema as Schema;
               }
             });
+
+            this.treeData = this.createTreeData("", this.schema);
+            console.log(this.treeData);
+            this.treeControl = new NestedTreeControl<TreeNode>(this.getChildren.bind(this));
+            this.dataSource = new MatTreeNestedDataSource();
+            this.dataSource.data = this.treeData;
           }
         }
       }
     });
+  }
+
+  getChildren(node: TreeNode) {
+    const ref = node.schema.$ref ? node.schema.$ref
+      : node.schema.type === "array" && node.schema.items.$ref ? node.schema.items.$ref : null;
+    if (ref) {
+      return this.createTreeData(this.getRefName(ref), this.apiService.getSchema(this.api, ref));
+    }
+    return [];
+  }
+
+  hasChildren(index: number, node: TreeNode) {
+    return node.schema.$ref || (node.schema.type === "array" && node.schema.items.$ref);
   }
 
   getSchemaType(schema: Schema) {
@@ -78,5 +108,22 @@ export class ApiResourceViewComponent implements OnInit {
   getRefName(ref: string) {
     let paths = ref.split("/")
     return paths[paths.length - 1];
+  }
+
+  isObject(schema: Schema) {
+    return schema.$ref;
+  }
+
+  createTreeData(name: string, schema: Schema) {
+    const tree: TreeNode[] = [];
+    if (schema.$ref) {
+      const child = this.apiService.getSchema(this.api, schema.$ref) as Schema;
+      tree.push(new TreeNode(name, child));
+    } else if (schema.properties) {
+      Object.keys(schema.properties).forEach((prop: string) => {
+        tree.push(new TreeNode(prop, schema.properties[prop]));
+      });
+    }
+    return tree;
   }
 }

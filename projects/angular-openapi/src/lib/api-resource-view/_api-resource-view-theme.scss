@@ -6,6 +6,9 @@
   $divider-color: mat-color($foreground, divider);
 
   ng-openapi-resource-view {
+    mat-tree.mat-tree.tree {
+      background: mat-color($background, background);
+    }
     .path {
       &.deprecated {
         color: mat-color($foreground, disabled-text);

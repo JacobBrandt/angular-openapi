@@ -43,7 +43,7 @@
   margin-bottom: 5px;
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: center;
 
   .name {
     &.deprecated {
@@ -73,4 +73,19 @@
 
 .code {
   margin-right: 15px;
+}
+
+::ng-deep .mat-nested-tree-node {
+  font-size: 16px;
+}
+
+.expand-button, .expand-icon {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+.node-children {
+  margin: 0px;
 }

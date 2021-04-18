@@ -41,7 +41,7 @@ export interface ApiXml {
 export interface Schema extends ApiReference {
   required: string[];
   type: string;
-  properties: Map<string, Schema>;
+  properties: {[id: string]: Schema};
   format?: string;
   minLength?: number;
   maxLength?: number;

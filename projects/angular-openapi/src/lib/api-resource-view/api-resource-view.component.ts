@@ -15,7 +15,7 @@ interface Params {
 }
 
 export class TreeNode {
-  constructor(public name: string, public schema: Schema) {
+  constructor(public name: string, public schema: Schema, public parent: Schema) {
   }
 }
 
@@ -118,10 +118,10 @@ export class ApiResourceViewComponent implements OnInit {
     const tree: TreeNode[] = [];
     if (schema.$ref) {
       const child = this.apiService.getSchema(this.api, schema.$ref) as Schema;
-      tree.push(new TreeNode(name, child));
+      tree.push(new TreeNode(name, child, schema));
     } else if (schema.properties) {
       Object.keys(schema.properties).forEach((prop: string) => {
-        tree.push(new TreeNode(prop, schema.properties[prop]));
+        tree.push(new TreeNode(prop, schema.properties[prop], schema));
       });
     }
     return tree;

@@ -11,11 +11,12 @@
     <mat-tree class="tree" [dataSource]="dataSource" [treeControl]="treeControl">
       <mat-nested-tree-node *matTreeNodeDef="let node">
         <div *ngIf="node.schema" class="property">
+          <div class="child-line"></div>
           <div class="type">{{this.getSchemaType(node.schema)}}</div>
           <div class="describe">
             <div class="name" [ngClass]="{'deprecated': node.schema.deprecated}">
               {{node.name}}
-              <span class="required" *ngIf="schema.required && schema.required.includes(node.name)">*</span>
+              <span class="required" *ngIf="node.parent && node.parent.required && node.parent.required.includes(node.name)">*</span>
             </div>
             <div class="description" *ngIf="node.schema.minLength">minLength: {{node.schema.minLength}}</div>
             <div class="description" *ngIf="node.schema.maxLength">maxLength: {{node.schema.maxLength}}</div>
@@ -25,16 +26,17 @@
       </mat-nested-tree-node>
       <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildren">
         <div *ngIf="node.schema" class="property">
-          <div class="type">{{this.getSchemaType(node.schema)}}</div>
-          <button class="expand-button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+          <div class="child-line"></div>
+          <div class="type toggle" matTreeNodeToggle>{{this.getSchemaType(node.schema)}}</div>
+          <button class="expand-button" matTreeNodeToggle mat-icon-button [attr.aria-label]="'toggle ' + node.name">
             <mat-icon class="expand-icon">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
           <div class="describe">
-            <div class="name" [ngClass]="{'deprecated': node.schema.deprecated}">
+            <div class="name toggle" matTreeNodeToggle [ngClass]="{'deprecated': node.schema.deprecated}">
               {{node.name}}
-              <span class="required" *ngIf="schema.required && schema.required.includes(node.name)">*</span>
+              <span class="required" *ngIf="node.parent && node.parent.required && node.parent.required.includes(node.name)">*</span>
             </div>
             <div class="description" *ngIf="node.schema.minLength">minLength: {{node.schema.minLength}}</div>
             <div class="description" *ngIf="node.schema.maxLength">maxLength: {{node.schema.maxLength}}</div>
@@ -42,7 +44,8 @@
           <div class="deprecated-pill" *ngIf="node.schema.deprecated">deprecated</div>
         </div>
         <ul class="node-children">
-          <div *ngIf="treeControl.isExpanded(node)">
+          <div clas="expanded" *ngIf="treeControl.isExpanded(node)">
+            <div class="group-line"></div>
             <ng-container matTreeNodeOutlet></ng-container>
           </div>
         </ul>

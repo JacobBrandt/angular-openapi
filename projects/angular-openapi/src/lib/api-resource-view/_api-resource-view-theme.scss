@@ -8,7 +8,16 @@
   ng-openapi-resource-view {
     mat-tree.mat-tree.tree {
       background: mat-color($background, background);
+
+      .node-children {
+        .ng-star-inserted {
+          .group-line, .child-line {
+            border-color: $divider-color;
+          }
+        }
+      }
     }
+
     .path {
       &.deprecated {
         color: mat-color($foreground, disabled-text);

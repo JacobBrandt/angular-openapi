@@ -94,7 +94,9 @@ export class ApiResourceViewComponent implements OnInit {
 
   getSchemaType(schema: Schema) {
     if (schema.type === "array") {
-      if (schema.items.$ref) {
+      if (schema.$ref) {
+        return `${this.getRefName(schema.$ref)} [ ]`;
+      } else if (schema.items.$ref) {
         return `${this.getRefName(schema.items.$ref)} [ ]`;
       } else {
         return `${schema.items.type} [ ]`;
@@ -115,7 +117,7 @@ export class ApiResourceViewComponent implements OnInit {
   }
 
   createTreeData(name: string, schema: Schema) {
-    const tree: TreeNode[] = [];
+    let tree: TreeNode[] = [];
     if (schema.$ref) {
       const child = this.apiService.getSchema(this.api, schema.$ref) as Schema;
       tree.push(new TreeNode(name, child, schema));
@@ -123,7 +125,11 @@ export class ApiResourceViewComponent implements OnInit {
       Object.keys(schema.properties).forEach((prop: string) => {
         tree.push(new TreeNode(prop, schema.properties[prop], schema));
       });
+    } else if (schema.type === "array") {
+      schema.items.type = "array";
+      tree.push(new TreeNode("", schema.items, schema));
     }
+
     return tree;
   }
 }
